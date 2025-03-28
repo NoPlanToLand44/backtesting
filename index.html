@@ -1,0 +1,15 @@
+<form method = "POST">
+    <label>Ticker: <input type = "text" name = "ticker" value = "AAPL", required></label><br>
+    <label>Start date: <input type = "date" name = "start_date" required></label><br>
+    <label>End date: <input type = "date" name = "end_date" required></label><br>
+    <label>Initial capital: <input type = "number" name="capital" value = "10000" required></label><br>
+    <label> Strategy: 
+        <select name = "strategy">
+            <option value = "buy_and_hold">Buy and hold </option>
+            <option value = "ma"> Moving average </option>
+            <option value = "rsi"> RSI </option>
+            <option> MACD </option>
+        </select>
+    </label><br>
+    <button type = "sublmit">Run backtest</button>
+</form>

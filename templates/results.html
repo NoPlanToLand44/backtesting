@@ -12,10 +12,13 @@
         <p>End date: {{end_date}}</p>
         <h3>Performance</h3>
         <ul>
-            <li>Total return: {{total_return}}%</li>
-            <li>Annualized return: {{annualized_return}}%</li>
+            <li>Total return: {{results}}</li>
+            <li>Final Value {{results["final_value"]}}</li>
             <li>Sharpe ratio: {{sharpe_ratio}}</li>
-            <li>Max drawdown: {{max_drawdown}}%</li>
+            <li>Max drawdown: {{results["max_drawdown"]}}%</li>
+            <p>all results: 
+                {{results}}
+            </p>
         </ul>
     </body>
 </html>

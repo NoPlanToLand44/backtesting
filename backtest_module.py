@@ -13,9 +13,12 @@ from  strategy_module import buy_and_hold, SmaCrossStrategy # import the strateg
 
 
 def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now() - datetime.timedelta(days = 365*5), end_date = datetime.datetime.now()):
-    data = yf.download(ticker, start = start_date,  end = end_date)
-    data.columns = data.columns.droplevel([1]) # clear the multi-index columns
-    data_feed = bt.feeds.PandasData(dataname = data)
+    try:
+        data = yf.download(ticker, start = start_date,  end = end_date)
+        data.columns = data.columns.droplevel([1]) # clear the multi-index columns
+        data_feed = bt.feeds.PandasData(dataname = data)
+    except Exception as e:
+        return {"error" : f"failed data: {str(e)}"}
 
     if strategy == 'buy_and_hold':
         carebro2 = bt.Cerebro()# the class that will handle the backtesting 
@@ -23,11 +26,15 @@ def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now()
         carebro2.broker.setcash(capital) # might want to expose that to the user later
         carebro2.addstrategy(buy_and_hold)
         carebro2.addsizer(bt.sizers.PercentSizer, percents = 10) # 10% of the cash will be used for each trade
+        carebro2.addanalyzer(bt.analyzers.Returns)
+        carebro2.addanalyzer(bt.analyzers.DrawDown, _name='drawdown')
         results2 = carebro2.run()
-        final_value2 = carebro2.broker.getvalue()
-
-        return final_value2
-
+        
+        return {
+            "final_value": carebro2.broker.getvalue(),
+            "returns": results2[0].analyzers.returns.get_analysis(),
+            "max_drawdown": results2[0].analyzers.drawdown.get_analysis()['max']['drawdown']
+        }
 
     if strategy == 'sma_cross':
         carebro = bt.Cerebro()# the class that will handle the backtesting 
@@ -35,7 +42,20 @@ def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now()
         carebro.broker.setcash(capital) # might want to expose that to the user later
         carebro.addstrategy(SmaCrossStrategy)
         carebro.addsizer(bt.sizers.PercentSizer, percents = 10) # 10% of the cash will be used for each trade
+        carebro.addanalyzer(bt.analyzers.Returns, _name='returns')
         carebro.addanalyzer(bt.analyzers.SharpeRatio, _name = 'sharpe')
-        results = carebro.run()
-        final_value = carebro.broker.getvalue()
-        return final_value
+        carebro.addanalyzer(bt.analyzers.DrawDown, _name='drawdown')
+        try:
+            results = carebro.run()
+            if not results or len(results) == 0: 
+                return {"error": "strategy produced no results"}
+            return {
+                "final_value": carebro.broker.getvalue(),
+                "returns": results[0].analyzers.returns.get_analysis(),
+                "sharpe_ratio": results[0].analyzers.sharpe.get_analysis(),
+                "max_drawdown": results[0].analyzers.drawdown.get_analysis()['max']['drawdown'],
+            }
+        except IndexError as e:
+            return {"error": f"strategy execution failed: {str(e)}"}
+    else:
+        return {"error": f"unknown strategy"}

@@ -8,7 +8,7 @@ class buy_and_hold(bt.Strategy):
             self.buy()
 
 class SmaCrossStrategy(bt.Strategy):
-        params = (('fast', 1),('slow', 200),('mega_slow', 500), ) # parameters for the strategy
+        params = (('fast', 20),('slow', 200),('mega_slow', 500), ) # parameters for the strategy
         def __init__(self):
             self.sma_fast = bt.indicators.SimpleMovingAverage(self.datas[0], period = self.params.fast)
             self.sma_slow = bt.indicators.SimpleMovingAverage(self.datas[0], period = self.params.slow)

@@ -1,14 +1,17 @@
 <form method = "POST">
+    <h1>Backtest your strategy for the last 5 years</h1>
     <label>Ticker: <input type = "text" name = "ticker" value = "AAPL", required></label><br>
+    
     <label>Start date: <input type = "date" name = "start_date" required></label><br>
-    <label>End date: <input type = "date" name = "end_date" required></label><br>
+    <label>End date: <input type = "date" name = "end_date" required></label><br> 
+    
     <label>Initial capital: <input type = "number" name="capital" value = "10000" required></label><br>
     <label> Strategy: 
         <select name = "strategy">
             <option value = "buy_and_hold">Buy and hold </option>
-            <option value = "ma"> Moving average </option>
+            <option value = "sma_cross"> SMA cross </option>
             <option value = "rsi"> RSI </option>
-            <option> MACD </option>
+            <option value = "macd"> MACD </option>
         </select>
     </label><br>
     <button type = "sublmit">Run backtest</button>

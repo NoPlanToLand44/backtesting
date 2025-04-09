@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta chartset = "UTF-8">
+        <title>Backtest results for {{ticker}}</title>
+        </head>
+    <body>
+        <h1>Backtest results for {{ticker}}</h1>
+        <h2>Strategy: {{strategy}}</h2>
+        <p>Initial capital: ${{capital}}</p>
+        <p>Start date: {{start_date}}</p>
+        <p>End date: {{end_date}}</p>
+        <h3>Performance</h3>
+        <ul>
+            <li>Total return: {{total_return}}%</li>
+            <li>Annualized return: {{annualized_return}}%</li>
+            <li>Sharpe ratio: {{sharpe_ratio}}</li>
+            <li>Max drawdown: {{max_drawdown}}%</li>
+        </ul>
+    </body>
+</html>

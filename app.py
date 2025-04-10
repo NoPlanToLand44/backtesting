@@ -16,8 +16,11 @@ def index():
 
         #run the strategy 
         results = run_backtest(ticker, capital, strategy, start_date, end_date) 
+        # compare to buy and hold: 
+        buy_and_hold = run_backtest(ticker, capital, "buy_and_hold", start_date, end_date) 
         return render_template('results.html', strategy = strategy,ticker = ticker, capital = capital, 
-                               start_date = start_date, end_date = end_date, results = results)
+                               start_date = start_date, end_date = end_date, results = results, buy_and_hold = buy_and_hold)
+
     if request.method == 'GET':
         # Render the initial form
         return render_template('index.html')

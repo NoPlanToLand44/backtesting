@@ -12,12 +12,17 @@
         <p>End date: {{end_date}}</p>
         <h3>Performance</h3>
         <ul>
-            <li>Total return: {{results}}</li>
+            <li>Total return: {{results["returns"]}}</li>
             <li>Final Value {{results["final_value"]}}</li>
-            <li>Sharpe ratio: {{sharpe_ratio}}</li>
+            <li>Sharpe ratio: {{results["sharpe_ratio"]}}</li>
             <li>Max drawdown: {{results["max_drawdown"]}}%</li>
+        <h3>vs buy and hold: </h3>
+        <ul>
+            <li>Total return: {{buy_and_hold["returns"]}}</li>
+            <li>Final Value {{buy_and_hold["final_value"]}}</li>
+            <li>Sharpe ratio: {{buy_and_hold["sharpe_ratio"]}}</li>
+            <li>Max drawdown: {{buy_and_hold["max_drawdown"]}}%</li>
             <p>all results: 
-                {{results}}
             </p>
         </ul>
     </body>

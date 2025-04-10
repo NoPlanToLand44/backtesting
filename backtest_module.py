@@ -32,7 +32,7 @@ def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now()
         
         return {
             "final_value": carebro2.broker.getvalue(),
-            "returns": results2[0].analyzers.returns.get_analysis(),
+            "returns": results2[0].analyzers.returns.get_analysis()["rtot"]*capital,
             "max_drawdown": results2[0].analyzers.drawdown.get_analysis()['max']['drawdown']
         }
 
@@ -51,8 +51,8 @@ def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now()
                 return {"error": "strategy produced no results"}
             return {
                 "final_value": carebro.broker.getvalue(),
-                "returns": results[0].analyzers.returns.get_analysis(),
-                "sharpe_ratio": results[0].analyzers.sharpe.get_analysis(),
+                "returns": results[0].analyzers.returns.get_analysis()["rtot"]*capital,
+                "sharpe_ratio": results[0].analyzers.sharpe.get_analysis()["sharperatio"],
                 "max_drawdown": results[0].analyzers.drawdown.get_analysis()['max']['drawdown'],
             }
         except IndexError as e:

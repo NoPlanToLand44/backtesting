@@ -9,8 +9,8 @@ def index():
     if request.method == 'POST':
         # Extract data from inputs from the HTML form 
         ticker = request.form['ticker'].strip().upper()
-        start_date = request.form['start_date'] # TODO add logic
-        end_date = request.form['end_date'] # TODO add logic
+        start_date = request.form['start_date'] 
+        end_date = request.form['end_date'] 
         capital = float(request.form['capital'])
         strategy = request.form['strategy']
 
@@ -24,4 +24,5 @@ def index():
     if request.method == 'GET':
         # Render the initial form
         return render_template('index.html')
-    # add a comment 
+    if __name__ == "__main__": 
+        app.run(host = "0.0.0.0", port = 5000)

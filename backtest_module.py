@@ -1,22 +1,18 @@
 import pandas as pd 
-import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 import backtrader as bt
 import datetime
 import os
 from  strategy_module import buy_and_hold, SmaCrossStrategy # import the strategies from strategy_module.py
-
-
-           
+from  fetching_data import fetch_stock_data
 
 
 
-def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now() - datetime.timedelta(days = 365*5), end_date = datetime.datetime.now()):
+def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now() - datetime.timedelta(days = 365), end_date = datetime.datetime.now()):
     try:
-        data = yf.download(ticker, start = start_date,  end = end_date)
-        data.columns = data.columns.droplevel([1]) # clear the multi-index columns
-        data_feed = bt.feeds.PandasData(dataname = data)
+        df = fetch_stock_data(ticker = ticker, start_date=start_date, end_date=end_date)
+        data_feed = bt.feeds.PandasData(dataname = df)
     except Exception as e:
         return {"error" : f"failed data: {str(e)}"}
 
@@ -29,7 +25,6 @@ def run_backtest(ticker, capital, strategy, start_date = datetime.datetime.now()
         carebro2.addanalyzer(bt.analyzers.Returns)
         carebro2.addanalyzer(bt.analyzers.DrawDown, _name='drawdown')
         results2 = carebro2.run()
-        
         return {
             "final_value": carebro2.broker.getvalue(),
             "returns": results2[0].analyzers.returns.get_analysis()["rtot"]*capital,

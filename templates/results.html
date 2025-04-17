@@ -10,20 +10,24 @@
         <p>Initial capital: ${{capital}}</p>
         <p>Start date: {{start_date}}</p>
         <p>End date: {{end_date}}</p>
+        <p>Period: {{end_date - start_date}}</p>
         <h3>Performance</h3>
         <ul>
             <li>Total return: {{results["returns"]}}</li>
             <li>Final Value {{results["final_value"]}}</li>
-            <li>Sharpe ratio: {{results["sharpe_ratio"]}}</li>
-            <li>Max drawdown: {{results["max_drawdown"]}}%</li>
+            <li>Sharpe ratio: {{results["sharpe"]}}</li>
+            <li>Max drawdown: {{results["drawdown"]}}%</li>
+        {% if show_comparison %}
         <h3>vs buy and hold: </h3>
         <ul>
             <li>Total return: {{buy_and_hold["returns"]}}</li>
             <li>Final Value {{buy_and_hold["final_value"]}}</li>
-            <li>Sharpe ratio: {{buy_and_hold["sharpe_ratio"]}}</li>
-            <li>Max drawdown: {{buy_and_hold["max_drawdown"]}}%</li>
-            <p>all results: 
-            </p>
+            <li>Sharpe ratio: {{buy_and_hold["sharpe"]}}</li>
+            <li>Max drawdown: {{buy_and_hold["drawdown"]}}%</li>
         </ul>
-    </body>
+        {% endif %}
+    <div class = "bottom-left">
+    <a href="/"><button type="button">Run Another Backtest</button></a>
+    </div>
+</body>
 </html>

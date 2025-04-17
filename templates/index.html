@@ -1,18 +1,86 @@
-<form method = "POST">
-    <h1>Backtest your strategy for the last 5 years</h1>
-    <label>Ticker: <input type = "text" name = "ticker" value = "AAPL", required></label><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backtest Strategy Tool</title>
+  <style>
+    select#ticker {
+      width: 200px;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
     
-    <label>Start date: <input type = "date" name = "start_date" required></label><br>
-    <label>End date: <input type = "date" name = "end_date" required></label><br> 
+    .form-group {
+      margin-bottom: 15px;
+    }
     
-    <label>Initial capital: <input type = "number" name="capital" value = "10000" required></label><br>
-    <label> Strategy: 
-        <select name = "strategy">
-            <option value = "buy_and_hold">Buy and hold </option>
-            <option value = "sma_cross"> SMA cross </option>
-            <option value = "rsi"> RSI </option>
-            <option value = "macd"> MACD </option>
-        </select>
-    </label><br>
-    <button type = "sublmit">Run backtest</button>
-</form>
+    button[type="submit"] {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Backtest your strategy for up to 5 years back</h1>
+  
+  <form method="POST">
+    <div class="form-group">
+      <label for="ticker">Select Ticker:</label>
+      <select id="ticker" name="ticker" required>
+        <option value="AAPL" selected>AAPL - Apple Inc.</option>
+        <option value="MSFT">MSFT - Microsoft Corporation</option>
+        <option value="GOOGL">GOOGL - Alphabet Inc.</option>
+        <option value="AMZN">AMZN - Amazon.com Inc.</option>
+        <option value="META">META - Meta Platforms Inc.</option>
+        <option value="TSLA">TSLA - Tesla Inc.</option>
+        <option value="NVDA">NVDA - NVIDIA Corporation</option>
+        <option value="JPM">JPM - JPMorgan Chase & Co.</option>
+        <option value="V">V - Visa Inc.</option>
+        <option value="UNH">UNH - UnitedHealth Group Inc.</option>
+        <option value="JNJ">JNJ - Johnson & Johnson</option>
+        <option value="WMT">WMT - Walmart Inc.</option>
+        <option value="PG">PG - Procter & Gamble Co.</option>
+        <option value="MA">MA - Mastercard Inc.</option>
+        <option value="HD">HD - Home Depot Inc.</option>
+        <!-- Add more S&P 500 tickers as needed -->
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="start_date">Start date:</label>
+      <input type="date" id="start_date" name="start_date" value="2023-01-22" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="end_date">End date:</label>
+      <input type="date" id="end_date" name="end_date" value="2025-04-17" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="capital">Initial capital:</label>
+      <input type="number" id="capital" name="capital" value="10000" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="strategy">Strategy:</label>
+      <select id="strategy" name="strategy">
+        <option value="buy_and_hold">Buy and hold</option>
+        <option value="sma_cross">SMA cross</option>
+        <option value="boll_reversion_to_mean">Bollinger: reversion to the mean</option>
+        <option value="MACDCrossoverStrategy">MACD</option>
+        <option value="RSIReversalStrategy">RSI Reversal</option>
+      </select>
+    </div>
+    
+    <button type="submit">Run backtest</button>
+  </form>
+</body>
+</html>

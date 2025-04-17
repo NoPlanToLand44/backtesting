@@ -48,4 +48,3 @@ def fetch_stock_data(ticker, api_key = '6u512poKFdRFB7PZpgNGSVqj5pVvYner', start
     else:
         return(f"Request failed with status code {response.status_code}: {response.text}")
 
-fetch_stock_data("AAPL")

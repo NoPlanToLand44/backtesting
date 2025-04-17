@@ -1,8 +1,9 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    gfortran
-RUN pip install numpy==1.25.0
+    gfortran \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Copy requirements file and upgrade pip tools.

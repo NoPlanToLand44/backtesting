@@ -1,6 +1,0 @@
-venv/
-.venv/
-.git/
-.gitignore
-.gitmodules
-fetching_data.ipynb

@@ -1,15 +1,5 @@
 git clone
 cd
-# install python https://www.python.org/downloads/
-
-# make the evnironment 
- python -m venv venv 
-
-# On Windows activate
-venv\Scripts\activate
-# On macOS/Linux
-source venv/bin/activate
-
-pip install -r requirements.txt
-
-flask run
+docker build -t backtesting-app .
+docker run -p 8080:5000 -e POLYGON_API_KEY=6u512poKFdRFB7PZpgNGSVqj5pVvYner backtesting-app
+http://localhost:8080/

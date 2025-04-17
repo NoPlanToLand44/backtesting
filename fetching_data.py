@@ -1,11 +1,15 @@
 import datetime
 import requests
 import pandas as pd
+import os
 
 # Replace 'YOUR_API_KEY' with your actual Polygon.io API key.
-api_key = '6u512poKFdRFB7PZpgNGSVqj5pVvYner'
 
-def fetch_stock_data(ticker, api_key = '6u512poKFdRFB7PZpgNGSVqj5pVvYner', start_date = datetime.datetime.now() - datetime.timedelta(days = 250), end_date = datetime.datetime.now()):
+def fetch_stock_data(ticker, api_key = None, start_date = datetime.datetime.now() - datetime.timedelta(days = 250), end_date = datetime.datetime.now()):
+    if api_key is None:
+        api_key = os.environ.get("POLYGON_API_KEY")
+        if not api_key:
+            raise ValueError("No API key provided")
     # Format the dates in the format required by the API (YYYY-MM-DD)
     start_date_str = start_date.strftime("%Y-%m-%d")
     end_date_str = end_date.strftime("%Y-%m-%d")

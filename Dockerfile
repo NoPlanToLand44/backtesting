@@ -6,17 +6,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
-# Copy requirements file and upgrade pip tools.
+# Copy requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip setuptools wheel
-
-# Ensure your requirements.txt pins a numpy version that supports Python 3.10.
-# For example, your file might have:
-#    numpy>=1.25.0
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
 
-# Copy the rest of your application code.
+# Copy the application code
 COPY . /app/
 
+# Set environment variables for production
+ENV FLASK_ENV=production
+ENV FLASK_DEBUG=0
+
 EXPOSE 5000
-CMD ["python", "app.py"]
+
+# Fix the Gunicorn command - this was the main issue
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app"]

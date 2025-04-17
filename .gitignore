@@ -1,6 +1,0 @@
-#ignore venv files 
-venv/
-.venv/
-.flaskenv
-__pycache__
-
